@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dani & Josi — Nuestra Historia de Amor</title>
+  <style>
+    :root{
+      --bg:#fdf9fd;
+      --card:#ffffffcc;
+      --accent:#c79dd7;
+      --muted:#6a597a;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family: 'Georgia', serif;
+      margin:0; min-height:100vh;
+      background: linear-gradient(135deg,#fdf9fd,#f5e9f9);
+      color:#3b2d3f;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+    }
+    header{
+      padding:3rem 1.5rem 1rem; text-align:center;
+      animation: fadeDown 1.5s ease;
+    }
+    .title{font-size:2.5rem; letter-spacing:0.15rem; margin:0; color:var(--accent); animation: glow 2s infinite alternate;}
+    .subtitle{color:var(--muted); margin-top:.5rem; font-size:1.2rem; animation: fadeIn 3s ease;}
+    .main-photo{margin-top:2rem; text-align:center;}
+    .main-photo img{max-width:90%; border-radius:20px; box-shadow:0 8px 25px rgba(199,157,215,0.4);}
+    .container{max-width:960px; margin:2rem auto; padding:1rem}
+    .section-title{font-size:2rem; text-align:center; margin-bottom:2rem; color:var(--accent);}
+    .card{background:var(--card); border-radius:16px; padding:2rem; box-shadow:0 8px 30px rgba(199,157,215,0.25); margin-bottom:2rem; animation: slideUp 1s ease forwards; opacity:0;}
+
+    .timeline{display:flex; flex-direction:column; gap:2rem;}
+    .event{display:flex; align-items:center; gap:2rem; opacity:0; transform:translateX(-30px); transition:all .8s ease; background:#fff9ff; border-radius:12px; padding:1rem; box-shadow:0 4px 12px rgba(199,157,215,0.2);}
+    .event.visible{opacity:1; transform:translateX(0);}
+    .event:nth-child(even){flex-direction:row-reverse;}
+    .event img{width:45%; max-height:280px; object-fit:cover; border-radius:12px; box-shadow:0 6px 20px rgba(199,157,215,0.3); transition: transform .5s;}
+    .event img:hover{transform:scale(1.05);}
+    .event-content{flex:1;}
+    .event-content h3{margin:0; color:var(--accent)}
+    .event-content h4{margin:0.3rem 0; color:var(--muted)}
+    .event-content p{margin:.5rem 0; line-height:1.6}
+
+    footer{margin-top:3rem;text-align:center;color:var(--muted); font-size:.9rem; animation: fadeIn 2s ease;}
+
+    @media(max-width:768px){
+      .event{flex-direction:column !important; text-align:center;}
+      .event img{width:100%;}
+    }
+
+    /* Contador */
+    .counter-section{text-align:center; margin-top:3rem; background:#fff9ff; border-radius:16px; padding:1.5rem; box-shadow:0 6px 20px rgba(199,157,215,0.2)}
+    .counter-title{font-size:1.2rem; color:var(--muted); margin-bottom:1rem}
+    .counter-value{font-size:2.5rem; font-weight:bold; color:var(--accent); animation: pulse 1.5s infinite;}
+    .celebration{font-size:2rem; color:var(--accent); margin-top:1rem; display:none; animation: fadeIn 2s ease;}
+    canvas#confettiCanvas{position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999;}
+
+    /* Carta popup */
+    .popup-overlay{
+      position:fixed;top:0;left:0;width:100%;height:100%;
+      background:rgba(0,0,0,0.4);
+      display:flex;align-items:center;justify-content:center;
+      z-index:10000;display:none;
+      animation: fadeIn 1s ease;
+    }
+    .popup{
+      background:#fff9ff;
+      border-radius:20px;
+      padding:2rem;
+      text-align:center;
+      box-shadow:0 8px 30px rgba(199,157,215,0.4);
+      max-width:400px;
+      animation: scaleUp 0.6s ease;
+    }
+    .popup h2{color:var(--accent); margin-bottom:1rem;}
+    .close-btn{
+      background:var(--accent);
+      border:none;
+      color:#fff;
+      padding:0.6rem 1.2rem;
+      border-radius:30px;
+      font-size:1rem;
+      cursor:pointer;
+      margin-top:1rem;
+      transition: background .3s;
+    }
+    .close-btn:hover{background:#b589cc;}
+    .special-btn{
+      background:var(--accent);
+      border:none;
+      color:#fff;
+      padding:.8rem 1.5rem;
+      border-radius:30px;
+      font-size:1rem;
+      cursor:pointer;
+      margin:2rem auto 0; display:block;
+      transition: background .3s;
+    }
+    .special-btn:hover{background:#b589cc;}
+
+    /* Animaciones */
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes fadeDown{from{opacity:0; transform:translateY(-30px);}to{opacity:1; transform:translateY(0);}}
+    @keyframes slideUp{to{opacity:1; transform:translateY(0);}}
+    @keyframes pulse{0%{transform:scale(1);}50%{transform:scale(1.2);}100%{transform:scale(1);}}
+    @keyframes glow{from{text-shadow:0 0 10px var(--accent);}to{text-shadow:0 0 20px var(--accent);}}
+    @keyframes scaleUp{from{transform:scale(0.7);}to{transform:scale(1);}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class="title">Josi & Dani</h1>
+    <div class="subtitle">De amigos a compañeros de vida, junto con Dios</div>
+    <div class="main-photo">
+      <img src="imagenes/JOSI1.jpg" alt="Foto principal Josi y Dani" />
+    </div>
+  </header>
+
+  <div class="container">
+    <h2 class="section-title">Nuestra Historia</h2>
+    <div class="card">
+      <div class="timeline">
+
+        <!-- Septiembre -->
+        <div class="event">
+          <img src="imagenes/primera_foto.jpg" alt="Primera foto juntos" />
+          <div class="event-content">
+            <h3>Septiembre 2024</h3>
+            <h4>Comienzo</h4>
+            <p>Todo comenzó con nuestra amistad y desde el primer momento sentí que Dios nos estaba uniendo. Cada risa, conversación y mirada compartida llenaba mi corazón de alegría y gratitud, recordándome que 'un amigo ama en todo momento' (Proverbios 17:17). Gracias a ti descubrí que el amor verdadero se construye en cada instante, incluso en los detalles más simples.</p>
+          </div>
+        </div>
+
+        <!-- Octubre -->
+        <div class="event">
+          <img src="imagenes/octubre_full_day.jpg" alt="Full day de actividades" />
+          <div class="event-content">
+            <h3>Octubre 2024</h3>
+            <h4>Primeras Aventuras</h4>
+            <p>Cada salida juntos fue una aventura mágica. Desde la Expo de Van Gogh hasta los paseos espontáneos, sentí que cada momento contigo era un regalo de Dios, y que a tu lado la vida siempre tiene colores más brillantes y alegría infinita, porque como dice la Biblia, 'mejores son dos que uno' (Eclesiastés 4:9). Contigo todo es más divertido y lleno de amor.</p>
+          </div>
+        </div>
+
+        <!-- Noviembre -->
+        <div class="event">
+          <img src="imagenes/noviembre_beso_cachete.jpg" alt="Beso chistoso en el cachete" />
+          <div class="event-content">
+            <h3>Noviembre 2024</h3>
+            <h4>Enamorándonos</h4>
+            <p>Nuestro amor crecía con cada gesto tierno, cada beso chistoso y cada abrazo. Sentía cómo Dios nos guiaba, haciendo que cada día juntos sea un recordatorio de que el amor verdadero es paciente, alegre y constante, y que contigo todo es más hermoso. Realmente 'el amor es paciente, es bondadoso' (1 Corintios 13:4) y yo lo vivo contigo cada día.</p>
+          </div>
+        </div>
+
+        <!-- Diciembre -->
+        <div class="event">
+          <img src="imagenes/diciembre_ano_nuevo.jpg" alt="Celebrando Año Nuevo" />
+          <div class="event-content">
+            <h3>Diciembre 2024</h3>
+            <h4>Celebrando juntos</h4>
+            <p>Las fiestas juntos fueron momentos que nunca olvidaré. Cada abrazo, sonrisa y brindis me recordaba que Dios nos bendice con alegría compartida, y que 'regocijaos siempre en el Señor' (Filipenses 4:4). Contigo cada celebración se convierte en un recuerdo eterno que guardo en mi corazón.</p>
+          </div>
+        </div>
+
+        <!-- Enero -->
+        <div class="event">
+          <img src="imagenes/enero_paracas.jpg" alt="Full day Paracas" />
+          <div class="event-content">
+            <h3>Enero 2025</h3>
+            <h4>Aventura y diversión</h4>
+            <p>Cada salida y aventura nos recordaba que la vida compartida es más hermosa. Desde Paracas hasta pequeños paseos, Dios nos enseñaba que 'este es el día que hizo el Señor; nos gozaremos y alegraremos en él' (Salmo 118:24). Contigo, cada instante es un regalo lleno de amor y emoción.</p>
+          </div>
+        </div>
+
+        <!-- Febrero -->
+        <div class="event">
+          <img src="imagenes/febrero_corazon.jpg" alt="Foto fondo corazón" />
+          <div class="event-content">
+            <h3>Febrero 2025</h3>
+            <h4>Amor y detalle</h4>
+            <p>Los gestos pequeños se convirtieron en los recuerdos más grandes. Cada detalle tuyo me hacía sentir amada y protegida, y comprendí que 'amaos los unos a los otros con amor fraternal' (Romanos 12:10). Gracias por cada momento tierno que hace que mi corazón lata más fuerte por ti.</p>
+          </div>
+        </div>
+
+        <!-- Marzo -->
+        <div class="event">
+          <img src="imagenes/marzo_servicio.jpg" alt="Sirviendo juntos" />
+          <div class="event-content">
+            <h3>Marzo 2025</h3>
+            <h4>Servicio y fe</h4>
+            <p>Servir juntos me enseñó que el amor se demuestra con acciones y no solo con palabras. Al ayudar y apoyar a otros, sentí cómo Dios nos decía que 'la fe sin obras está muerta' (Santiago 2:17). Contigo aprendí a amar en cada gesto, compartiendo nuestra fe y creciendo juntos.</p>
+          </div>
+        </div>
+
+        <!-- Abril -->
+        <div class="event">
+          <img src="imagenes/abril_amigos.jpg" alt="Con amigos y familia" />
+          <div class="event-content">
+            <h3>Abril 2025</h3>
+            <h4>Compartiendo pasatiempos</h4>
+            <p>Desde cantar, bailar, cocinar y leer hasta compartir con amigos y familia, cada momento contigo es una alegría multiplicada. Dios me recuerda que 'haz todo con amor' (1 Corintios 16:14), y contigo aprendo cada día lo hermoso que es disfrutar juntos de la vida.</p>
+          </div>
+        </div>
+
+        <!-- Mayo -->
+        <div class="event">
+          <img src="imagenes/mayo_playa.jpg" alt="Noche en la playa" />
+          <div class="event-content">
+            <h3>Mayo 2025</h3>
+            <h4>Disfrutando de la etapa</h4>
+            <p>Cada día contigo es un regalo que atesoro. Desde paseos hasta noches en la playa, siento que Dios nos enseña a 'hacer todo de corazón, como para Él' (Colosenses 3:23). Amarte y compartir la vida contigo me llena de gratitud y felicidad infinita.</p>
+          </div>
+        </div>
+
+        <!-- Junio -->
+        <div class="event">
+          <img src="imagenes/junio_predicando.jpg" alt="Predicando a adolescentes" />
+          <div class="event-content">
+            <h3>Junio 2025</h3>
+            <h4>Creciendo juntos</h4>
+            <p>A tu lado he crecido como persona y como pareja. Cada desafío y aprendizaje nos acercaba más, y Dios nos recordaba que 'si alguien está en Cristo, nueva criatura es' (2 Corintios 5:17). Gracias por ser mi compañero de vida y de fe en todo momento.</p>
+          </div>
+        </div>
+
+        <!-- Julio -->
+        <div class="event">
+          <img src="imagenes/julio_fiesta.jpg" alt="Fiesta cumpleaños" />
+          <div class="event-content">
+            <h3>Julio 2025</h3>
+            <h4>Momentos especiales</h4>
+            <p>Celebrar tu vida y compartir momentos especiales me enseñó que la felicidad se encuentra en lo cotidiano y en lo extraordinario. Dios nos invita a 'dar gracias en todo' (1 Tesalonicenses 5:18), y yo doy gracias cada día por ti, por tu amor y tu compañía.</p>
+          </div>
+        </div>
+
+        <!-- Agosto -->
+        <div class="event">
+          <img src="imagenes/agosto_gastronomia.jpg" alt="Recorrido gastronómico" />
+          <div class="event-content">
+            <h3>Agosto 2025</h3>
+            <h4>Recorrido gastronómico</h4>
+            <p>Disfrutar juntos de sabores, lugares y experiencias fue la culminación perfecta de nuestro primer año. Cada comida y paseo me recordaba que 'gocémonos y alegrémonos' (Salmo 118:24), y que a tu lado la vida siempre es deliciosa, divertida y llena de amor.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Contador -->
+    <div class="card counter-section">
+      <div class="counter-title">Since September 13, 2024</div>
+      <div id="dayCounter" class="counter-value">0</div>
+      <div id="celebrationMessage" class="celebration">¡Feliz Primer Aniversario mi amor!</div>
+      <button class="special-btn" onclick="showPopup()">❤️ Carta Especial ❤️</button>
+    </div>
+  </div>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Popup Carta -->
+  <div id="popupOverlay" class="popup-overlay">
+    <div class="popup">
+      <h2>Mi amor, Josi</h2>
+      <p>Este año contigo ha sido un regalo de Dios. Cada risa, abrazo, aventura y detalle me recuerda que eres el compañero que siempre soñé. Te amo con todo mi corazón y doy gracias por cada momento juntos.</p>
+      <button class="close-btn" onclick="closePopup()">Cerrar ❤️</button>
+    </div>
+  </div>
+
+  <footer>
+    Con amor, Dani & Josi — 2025
+  </footer>
+
+  <script>
+    // Calcular días desde el 13 de septiembre 2024
+    function calculateDays(){
+      const startDate = new Date("2024-09-13");
+      const today = new Date();
+      const diffTime = today - startDate;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays;
+    }
+
+    function updateCounter(){
+      const days = calculateDays();
+      document.getElementById("dayCounter").textContent = days + " días";
+      if(days >= 365){
+        document.getElementById("celebrationMessage").style.display = "block";
+        startConfetti();
+      }
+    }
+
+    // Confetti effect
+    function startConfetti(){
+      const canvas = document.getElementById("confettiCanvas");
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const confettis = Array.from({length:200}).map(()=>({
+        x: Math.random()*canvas.width,
+        y: Math.random()*canvas.height - canvas.height,
+        r: Math.random()*6+4,
+        d: Math.random()*0.5+0.5,
+        tilt: Math.random()*10-10,
+        tiltAngle:0,
+        color: `hsl(${Math.random()*360},70%,60%)`
+      }));
+
+      function draw(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        confettis.forEach(c=>{
+          ctx.beginPath();
+          ctx.ellipse(c.x,c.y,c.r,c.r/2,c.tiltAngle,0,Math.PI*2);
+          ctx.fillStyle=c.color;
+          ctx.fill();
+        });
+        update();
+      }
+
+      function update(){
+        confettis.forEach(c=>{
+          c.y += c.d*4;
+          c.x += Math.sin(c.tiltAngle);
+          c.tiltAngle += 0.1;
+          if(c.y>canvas.height){
+            c.y = -10;
+            c.x = Math.random()*canvas.width;
+          }
+        });
+      }
+
+      setInterval(draw,20);
+    }
+
+    function showPopup(){
+      document.getElementById("popupOverlay").style.display = "flex";
+    }
+
+    function closePopup(){
+      document.getElementById("popupOverlay").style.display = "none";
+    }
+
+    // Animación aparición de eventos al hacer scroll
+    const events = document.querySelectorAll('.event');
+    function revealOnScroll(){
+      const triggerBottom = window.innerHeight * 0.85;
+      events.forEach(ev =>{
+        const boxTop = ev.getBoundingClientRect().top;
+        if(boxTop < triggerBottom){
+          ev.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll',revealOnScroll);
+    revealOnScroll();
+
+    updateCounter();
+  </script>
+</body>
+</html>
