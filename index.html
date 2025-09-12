@@ -357,11 +357,120 @@
     updateCounter();
   </script>
 
-  <iframe width="0" height="0"
-  src="https://www.youtube.com/embed/4lXBSj-Y-5A?autoplay=1&loop=1&playlist=4lXBSj-Y-5A"
+<!-- Botón flotante de música con tooltip -->
+<div class="music-btn-wrapper">
+  <button id="musicBtn" class="music-btn" onclick="toggleMusic()">🎵</button>
+  <span id="tooltip" class="tooltip">Haz clic para escuchar nuestra canción 💖</span>
+</div>
+
+<!-- Música de fondo (YouTube embebido) -->
+<iframe id="bgMusic" width="0" height="0"
+  src="https://www.youtube.com/embed/4lXBSj-Y-5A?enablejsapi=1&loop=1&playlist=4lXBSj-Y-5A"
   frameborder="0" allow="autoplay">
 </iframe>
-  
+
+<style>
+  .music-btn-wrapper {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10001;
+  }
+
+  .music-btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(199,157,215,0.4);
+    transition: transform 0.3s, background 0.3s;
+    animation: pulseGlow 1.5s infinite alternate;
+  }
+  .music-btn:hover {
+    transform: scale(1.15);
+    background: #b589cc;
+  }
+
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 10px var(--accent), 0 0 20px rgba(199,157,215,0.5); }
+    100% { box-shadow: 0 0 25px var(--accent), 0 0 40px rgba(199,157,215,0.8); }
+  }
+
+  /* Tooltip */
+  .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    right: 70px;
+    transform: translateY(-50%);
+    background: #fff9ff;
+    color: var(--muted);
+    padding: 8px 12px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(199,157,215,0.3);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transition: opacity 0.5s;
+  }
+  .music-btn-wrapper:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  .tooltip.show {
+    visibility: visible;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  let musicPlaying = false;
+  let player;
+
+  // Cargar API de YouTube
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('bgMusic', {
+      events: {
+        'onReady': () => {
+          console.log("YouTube listo");
+        }
+      }
+    });
+  }
+
+  function toggleMusic(){
+    if(!player) return;
+    if(musicPlaying){
+      player.pauseVideo();
+      musicPlaying = false;
+      document.getElementById("musicBtn").textContent = "🔇";
+    } else {
+      player.playVideo();
+      musicPlaying = true;
+      document.getElementById("musicBtn").textContent = "🎵";
+    }
+  }
+
+  // Insertar API de YouTube
+  const tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.body.appendChild(tag);
+
+  // Mostrar tooltip automáticamente al cargar
+  window.addEventListener("load", () => {
+    const tooltip = document.getElementById("tooltip");
+    tooltip.classList.add("show");
+    setTimeout(() => {
+      tooltip.classList.remove("show");
+    }, 3000); // visible por 3 segundos
+  });
+</script>
+
 </body>
 </html>
+
 
