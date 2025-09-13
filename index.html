@@ -454,14 +454,14 @@
     }, 3000); // visible por 3 segundos
   });
 </script>
-
-
+  
+<script>
   let confettiLaunched = false; 
 
   window.addEventListener("scroll", () => {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
       if (!confettiLaunched) {
-        startConfetti(); // 🎉 ya la tienes definida en tu archivo
+        startConfetti();
         confettiLaunched = true;
       }
     }
@@ -470,6 +470,7 @@
   
 </body>
 </html>
+
 
 
 
